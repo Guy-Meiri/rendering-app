@@ -1,13 +1,34 @@
-import { Inter } from '@next/font/google'
+import { Inter } from "@next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+interface Props {
+  products: Product[];
+}
+
+interface Product {
+  id: string;
+  title: string;
+}
+
+export async function getStaticProps() {
+  return {
+    props: {
+      products: [
+        { id: "p1", title: "Product 1" },
+        { id: "p1", title: "Product 2" },
+        { id: "p3", title: "Product 3" },
+      ],
+    },
+  };
+}
+
+export default function Home({ products }: Props) {
   return (
     <>
-      <li>prod 1</li>
-      <li>prod 2</li>
-      <li>prod 3</li>
+      {products.map((p) => (
+        <li key={p.id}>{p.title}</li>
+      ))}
     </>
-  )
+  );
 }
